@@ -1,0 +1,11 @@
+[database]
+driver = ODBC Driver 18 for SQL Server
+server = 127.0.0.1
+database = xxxxxx
+user = xxxxx
+password = xxxxxx
+encrypt = yes
+
+[openai]
+api_key = xxxxxx
+org = xxxx
