@@ -17,3 +17,5 @@ Some caveats:
 
 Still I think it's a pretty cool POC :slightly_smiling_face:
 
+![GIF Description](https://s2.gifyu.com/images/chatgpt-sql-demo.gif)
+
