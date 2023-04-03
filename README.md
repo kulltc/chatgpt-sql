@@ -11,11 +11,13 @@ Connecting ChatGPT to an SQL Server so that you can ask questions about data in 
 7. ChatGPT interprets the result and formulates an answer (indicating it should be shared with the user)
 8. The script shares the answer with the user. ("The top selling product by revenue in 2013 is the Mountain-200 Black, 38.").
 
+THe app is currently configured to work with the [AdventureWorks database](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms), but it should be possible to make it work with any other database as well.
+
 Some caveats:
 * The database I use is the AdventureWorks database, which ChatGPT also knows from it's trainingdata, which means its probably performing better than it would with other databases.
 * It sometimes breaks, due to ChatGPT not following protocol.
 
 Still I think it's a pretty cool POC :slightly_smiling_face:
 
-![GIF Description](https://s2.gifyu.com/images/chatgpt-sql-demo.gif)
+![Demo](https://s2.gifyu.com/images/chatgpt-sql-demo.gif)
 
