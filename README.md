@@ -1,5 +1,7 @@
 # ChatGPT SQL
 
+![Demo](https://s2.gifyu.com/images/chatgpt-sql-demo.gif)
+
 Connecting ChatGPT to an SQL Server so that you can ask questions about data in natural language, and you also get an answer in natural language.  It works by creating a layer between the user and ChatGPT that routes messages between the user and ChatGPT on one side, and ChatGPT and the SQL server on the other. ChatGPT is indicating whether the message it meant for the user or for the server. What you see in the below image is the following:
 
 1. The user asks a question ("What is the top selling product by revenue in 2013?")
@@ -18,6 +20,4 @@ Some caveats:
 * It sometimes breaks, due to ChatGPT not following protocol.
 
 Still, I think it's a pretty cool POC :slightly_smiling_face:
-
-![Demo](https://s2.gifyu.com/images/chatgpt-sql-demo.gif)
 
