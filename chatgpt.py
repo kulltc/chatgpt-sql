@@ -1,6 +1,7 @@
 import os
 import openai
 import logging
+import json
 
 class ChatGPT:
 
@@ -39,10 +40,12 @@ class ChatGPT:
             openai.api_key
         openai.api_key = api_key
         self.model = model
-        self.messages = self.startMessageStack
+        self.messages = self.startMessageStack.copy()
 
-    def message(self, message):
+    def message(self, message, sender):
         logging.debug(message)
+        if (sender):
+            message = json.dumps({'message':message, 'sender':sender})
         self.messages.append({"role": "user", "content": message})
         completion = openai.ChatCompletion.create(
             model=self.model,
@@ -54,5 +57,6 @@ class ChatGPT:
         return response
 
     def reset(self):
-        self.messages = self.startMessageStack
+        self.messages = self.startMessageStack.copy()
+        print('model was reset to intial state')
 
