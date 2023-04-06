@@ -25,17 +25,35 @@ class Controller:
         # initialise all the things
         self.google_sql = GoogleCloudSQL(driver, server, database, user, password, encrypt)
         self.google_sql.connect()
-        self.chatModel = ChatGPT(openai_api_key, openai_org, openai_model)
+        with open('./prompts/sql_agent_message_stack.json') as prompts:
+            self.gpt_sql = ChatGPT(openai_api_key, openai_org, openai_model, json.load(prompts))
+        with open('./prompts/analyst_agent_message_stack.json') as prompts:
+            self.gpt_analyst = ChatGPT(openai_api_key, openai_org, openai_model)
+
+
+    def reset(self):
+        self.gpt_analyst.reset()
+        self.gpt_sql.reset()
 
     def run(self, message, sender, counter=0):
-        if (counter > 4):
+        if (counter > 6):
             return 'error: too many requests'
-        responseString = self.chatModel.message(message, sender)
+
+        responseString = self.gpt_sql.message(message, sender)
+        self.gpt_analyst = ChatGPT(openai_api_key, openai_org, openai_model)
+
+
         try:
             response = json.loads(responseString[:-1] if responseString.endswith('.') else responseString)
         except ValueError:
             return self.run("Please repeat that answer but use valid JSON only.", "SYSTEM", counter + 1)
+
         match response["recipient"]:
+            case "ANALYST":
+                print(f"Asking The Business Analyst!: {response['message']}")
+                analystAnswer = self.gpt_analyst.message(response["message"], None)
+                print(f"Analyst reponds: {analystAnswer}")
+                return self.run(analystAnswer, "ANALYST", counter + 1)
             case "USER": 
                 return response["message"]
             case "SERVER":

@@ -12,7 +12,7 @@ def main():
         if user_input.lower() == 'q':
             break
         if user_input == "r":
-            controller.chatModel.reset()
+            controller.reset()
             continue
         try:
             result = controller.run(message=user_input, sender="USER")

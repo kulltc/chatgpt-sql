@@ -50,6 +50,8 @@ class GoogleCloudSQL:
 
     def process_table_string(self, input_str):
         items = input_str.split(',')
+        if len(items) > 50:
+            raise f'Too many rows returned. This returned {items.length} rows, and there are 50 allowed.'
         items = [item.split('.')[-1] for item in items]
         formatted_str = "', '".join(items)
         result = f"'{formatted_str}'"
