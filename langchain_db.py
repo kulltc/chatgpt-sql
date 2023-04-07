@@ -18,5 +18,13 @@ db = GoogleCloudSQL(driver, server, database, user, password, encrypt)
 db.connect()
 
 def sql_query(query):
-    #todo: perhaps convert query result to markdown instead of CSV.
-    return db.execute_query(query.strip('```').rstrip('```'))
+    return db.execute_query(strip(query, [' ', '`']))
+
+def strip(string, tokens):
+    string = string.strip()
+    for token in tokens:
+        string = string.strip(token)
+    return string
+
+def sql_schema(tables):
+    return db.execute_schema(tables)

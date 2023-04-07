@@ -9,3 +9,6 @@ encrypt = yes
 [openai]
 api_key = xxxxxx
 org = xxxx
+
+[langchain]
+max_iterations = 4

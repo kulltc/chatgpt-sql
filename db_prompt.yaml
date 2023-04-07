@@ -1,0 +1,16 @@
+input_variables: [query, schema]
+output_parser: null
+template: "
+You have access to a database with the following schema:\n
+{schema}\n
+\n
+Furthermore your query must adhere to the following rules:\n
+1. You must include an aggregator function in your query in order to limit the
+ size of the query result.\n
+2. Once you have a query result, answer the question. If you have any doubts
+ about the query, don't run another query but instead add caveats to your answer.\n
+\n
+###\n
+{query}\n
+"
+template_format: f-string

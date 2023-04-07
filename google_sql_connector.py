@@ -1,6 +1,8 @@
 import pyodbc
 import csv
 import logging
+from tabulate import tabulate
+import pandas as pd
 
 from io import StringIO
 
@@ -25,28 +27,19 @@ class GoogleCloudSQL:
         self.conn.close()
 
     def execute_query(self, query):
-        print(f'\033[94mExecuting Query:{query}\033[0m')
-        try:
-            cursor = self.conn.cursor()
-            cursor.execute(query)
-            result = cursor.fetchall()
-            if len(result) == 0:
-                result = "0 rows returned"
-                logging.debug(result)
-                print(f'\033[96m{result}\033[0m')
-                return result
+        cursor = self.conn.cursor()
+        cursor.execute(query)
 
-            headers = [column[0] for column in cursor.description]
-            output = StringIO()
-            csv_writer = csv.writer(output)
-            csv_writer.writerow(headers)
-            csv_writer.writerows(result)
-            result = output.getvalue()
-            logging.debug(result)
-            print(f'\033[96m{result}\033[0m')
-            return result
-        except Exception as e:
-            return str(e)
+        # Get column names
+        columns = [column[0] for column in cursor.description]
+
+        # Fetch rows as a list of tuples
+        rows = cursor.fetchall()
+
+        # Convert rows and column names to markdown table using tabulate
+        markdown_table = tabulate(rows, headers=columns, tablefmt='pipe')
+
+        return markdown_table
 
     def process_table_string(self, input_str):
         items = input_str.split(',')
@@ -57,4 +50,5 @@ class GoogleCloudSQL:
 
     def execute_schema(self, table_list):
         queryPart = self.process_table_string(table_list)
-        return f"SELECT CONCAT(TABLE_SCHEMA, '.', TABLE_NAME, ', ', COLUMN_NAME, ', ', DATA_TYPE) AS 'Table, Column, DataType' FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME IN ({queryPart})"
+        return self.execute_query(f"SELECT CONCAT(TABLE_SCHEMA, '.', TABLE_NAME, ', ', COLUMN_NAME, ', ', DATA_TYPE) AS 'Table, Column, DataType' FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME IN ({queryPart})")
+        
