@@ -52,3 +52,7 @@ class Controller:
             case _:
                 print('error, invalid recipient')
                 print(response)
+
+
+    def reset(self):
+        self.chatModel.reset()
