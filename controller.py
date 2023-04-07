@@ -1,7 +1,10 @@
 import json
 from chatgpt import ChatGPT
-from google_sql_connector import GoogleCloudSQL
 import configparser
+
+
+from google_sql_connector import GoogleCloudSQL
+
 
 # Read the config file
 config = configparser.ConfigParser()
