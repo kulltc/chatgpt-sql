@@ -1,3 +1,5 @@
 debug.log
 config.ini
+credentials.json
+token.json
 __pycache__/
