@@ -1,3 +1,7 @@
+# EDIT July 27, 2023:
+
+Significant progress has been made on open source frameworks that allow LLM's to interact with other software (such as Databases). For any production use cases, I recommend using such a framework (e.g. [LangChain](https://python.langchain.com/docs/get_started/introduction.html)). This Repository can still serve as a straight forward (learning) example of how LLM tool use can be implemented from the ground up.
+
 # ChatGPT SQL
 
 ![Demo](https://s2.gifyu.com/images/chatgpt-sql-demo.gif)
